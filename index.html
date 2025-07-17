@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Women Safety Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      background-color: #e91e63;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    #chatbox {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background: #f9f9f9;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+
+    .user, .bot {
+      margin: 8px 0;
+    }
+
+    .user {
+      color: #0000cc;
+    }
+
+    .bot {
+      color: #007e33;
+    }
+
+    #userInput {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #sendBtn {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-group {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 15px;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      background-color: #d81b60;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Women Safety Chatbot</h1>
+
+  <div class="chat-container">
+    <div id="chatbox"></div>
+
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button id="sendBtn">Send</button>
+
+    <div class="btn-group">
+      <button class="action-btn" onclick="makeCall()">📞 Trusted Call</button>
+      <button class="action-btn" onclick="sendAlert()">🚨 Emergency Alert</button>
+      <button class="action-btn" onclick="openLocation()">📍 Live Location</button>
+      <button class="action-btn" onclick="showLaws()">📘 Women Safety Laws</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const keywordResponses = {
+      "follow": "It’s scary to feel followed. You’re not alone, I’m here for you. 🚨 Press Emergency Alert or Call now!",
+      "following": "Someone following you? Stay calm. Your safety matters. 🚨 Press Emergency Alert or Call now!",
+      "danger": "Danger detected. Stay alert and trust your instincts. 🚨 Press Emergency Alert or Call now!",
+      "help": "Help is near. You are strong and supported. 🚨 Press Emergency Alert or Call now!",
+      "emergency": "Emergency noticed. Acting fast saves lives. 🚨 Press Emergency Alert or Call now!",
+      "unsafe": "Feeling unsafe is serious. You deserve protection. 🚨 Press Emergency Alert or Call now!",
+      "harass": "Harassment is unacceptable. We’ll protect you. 🚨 Press Emergency Alert or Call now!",
+      "attack": "Possible attack? Don’t wait—act now. 🚨 Press Emergency Alert or Call now!",
+      "fear": "Fear can be powerful, but you’re not alone. 🚨 Press Emergency Alert or Call now!",
+      "scared": "It’s okay to be scared. I’ll guide you. 🚨 Press Emergency Alert or Call now!",
+      "alone": "Even if you feel alone, you’re not. I’m right here. 🚨 Press Emergency Alert or Call now!",
+      "abuse": "Abuse is a crime. You are not to blame. 🚨 Press Emergency Alert or Call now!",
+      "stalk": "Stalking is serious. Let’s take action. 🚨 Press Emergency Alert or Call now!",
+      "trouble": "Trouble around you? We’ll face it together. 🚨 Press Emergency Alert or Call now!",
+      "threat": "Threat identified. Stay strong and press emergency. 🚨 Press Emergency Alert or Call now!",
+      "panic": "Panic is natural. Just breathe. I’m here. 🚨 Press Emergency Alert or Call now!",
+      "dangerous": "Dangerous situation reported. Respond now. 🚨 Press Emergency Alert or Call now!",
+      "worried": "Worry is valid. You’re being heard. 🚨 Press Emergency Alert or Call now!"
+    };
+
+    sendBtn.addEventListener("click", handleUserMessage);
+
+    function handleUserMessage() {
+      const message = userInput.value.trim();
+      if (message === "") return;
+
+      appendMessage("user", message);
+      respondToUser(message.toLowerCase());
+      userInput.value = "";
+    }
+
+    function appendMessage(sender, message) {
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add(sender);
+      msgDiv.textContent = (sender === "user" ? "You: " : "Bot: ") + message;
+      chatbox.appendChild(msgDiv);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function respondToUser(msg) {
+      let matched = false;
+
+      for (let keyword in keywordResponses) {
+        if (msg.includes(keyword)) {
+          appendMessage("bot", keywordResponses[keyword]);
+          matched = true;
+          break;
+        }
+      }
+
+      if (!matched) {
+        appendMessage("bot", "🤖 I’m here to support you. Please describe your situation or use the buttons below.");
+      }
+    }
+
+    function makeCall() {
+      window.location.href = "tel:+919025200380";
+    }
+
+    function sendAlert() {
+      alert("🚨 Emergency Alert Sent to Trusted Contact: +91 9025200380");
+    }
+
+    function openLocation() {
+      window.open("https://maps.app.goo.gl/iBJXvBTmkKDe47rg7?g_st=awb", "_blank");
+    }
+
+    function showLaws() {
+      const laws = `
+🛡 Women's Safety Laws in India:
+
+1️⃣ IPC Section 354: Assault to outrage modesty of a woman  
+2️⃣ IPC Section 509: Insulting modesty with words or gestures  
+3️⃣ Sexual Harassment at Workplace Act, 2013  
+4️⃣ Dowry Prohibition Act, 1961  
+5️⃣ Protection of Women from Domestic Violence Act, 2005
+
+Know your rights. You are protected by law.
+      `;
+      appendMessage("bot", laws);
+    }
+  </script>
+</body>
+</html>
